@@ -397,15 +397,14 @@ body {
   }
 
   .jet-run-gif{
-
-    width: 55vw;
-    height: 35vw;
+    scale: 35%;
+    width: 1vw;
+    height: 1vw;
     margin-top: 2rem;
-    margin-left: vw;
   }
   .jet-run-gif-text{
-    width: 55vw;
-    height: 36vw;
+    width: 25vw;
+    height: 26vw;
     margin-top: -100rem;
     margin-left: 55vw;
   }
