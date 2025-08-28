@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/98.css">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/player.style/winamp/+esm"></script>  
+    <script src="https://unpkg.com/webamp@1.4.0/built/webamp.bundle.min.js"></script>
+    <title>JET RUN</title>
+</head>
+<body>
+    <div>
+        <IMG class="jet-run-gif"  src="assets/jet run spin transparent yellow text.gif" alt="">
+    </div>
+
+    <div>
+        <IMG class="jet-run-gif-text"  src="assets/transparent yellow text00000000.gif" alt="">
+    </div>
+
+
+    <div class="window" style="margin: 32px; width: 550px; height: 550px">
+        <div class="title-bar">
+          <div class="title-bar-text">JET RUN</div>
+          <div class="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Maximize" disabled></button>
+            <button aria-label="close">X</button>
+          </div>
+        </div>
+        <div class="window-body">
+            <p></p>
+            <menu role="tablist">
+                <li role="tab" aria-selected="true"><a href="#what-content">What?</a></li>
+                <li role="tab"><a href="#why-content">Why</a></li>
+                <li role="tab"><a href="#where-content">Where</a></li>
+            </menu>
+            <div id="what-content" class="window" role="tabpanel">
+                <div class="window-body"> 
+                    <p style="font-size: 15pt;">J E T or Jenckes Every Tuesday is a group run that exists solely to set a new course record up Jenckes St.</p>
+                    <img src="https://i.ibb.co/6P26W7G/Jet-Course-Profile.png" alt="Jenckes Course Profile" style="max-width: 100%;">
+                </div>
+            </div>
+            <div id="why-content" class="window" role="tabpanel" hidden>
+                <div class="window-body">
+                    <p style="font-size: 15pt;">because it's fun to run up hills and shatter the limits of human performance in good company</p>
+                </div>
+            </div>
+            <div id="where-content" class="window" role="tabpanel" hidden>
+                <div class="window-body">
+                    <p style="font-size: 15pt;">We meet at 6:30pm every Tuesday at <a href="https://www.google.com/maps/place/Prospect+Park,+Providence,+RI/@41.828551,-71.4011037,17z/data=!3m1!4b1!4m6!3m5!1s0x89e4453531b262d9:0x41f804564c781d4a!8m2!3d41.828551!4d-71.3985288!16s%2Fg%2F11b6s31x84?entry=ttu">Prospect Park</a><br><br></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="im-window-container"></div>
+
+    <div id="winamp-container"></div>
+    <script>
+        const Webamp = window.Webamp;
+        
+        // Correct place to declare the array and select a random skin
+        const winampSkins = [
+          "assets/WINAMPSKINS/BluesteelAMP.wsz",
+          "assets/WINAMPSKINS/clarity.wsz",
+          "assets/WINAMPSKINS/Grandia_Amp.wsz",
+          "assets/WINAMPSKINS/Haruko_I_Feel_So.wsz",
+          "assets/WINAMPSKINS/Hello Kitty - Angel.wsz",
+          "assets/WINAMPSKINS/Homer_Simpson_Goes_3D.wsz",
+          "assets/WINAMPSKINS/Leon_and_Clare.wsz",
+          "assets/WINAMPSKINS/ouran host club-3.wsz",
+          "assets/WINAMPSKINS/Snoopy_by_Finuras.wsz",
+          "assets/WINAMPSKINS/XBOX_MasterAmp.wsz",
+          "assets/WINAMPSKINS/yugioh02.wsz",
+          "assets/WINAMPSKINS/Yunaofffx.wsz",
+
+
+        ];
+        
+        const randomIndex = Math.floor(Math.random() * winampSkins.length);
+        const randomSkinUrl = winampSkins[randomIndex];
+    
+        const webamp = new Webamp({
+          initialTracks: [
+            {
+              metaData: {
+                artist: "Van Halen",
+                title: "Jump",
+              },
+              url: "assets/jump.mp3",
+            },
+          ],
+          // This is now correctly defined within the constructor object
+          initialSkin: {
+            url: randomSkinUrl,
+          },
+          __butterchurnOptions: {},
+        });
+        
+        webamp.renderWhenReady(document.getElementById('winamp-container'));
+    </script>
+
+<script>
+    // --- Instant Messenger Components and Logic ---
+    const Title = (props) => {
+        const { chatName } = props;
+        const header = document.createElement('div');
+        header.className = 'header';
+        header.textContent = `${chatName} - Instant Message`;
+        const ul = document.createElement('ul');
+        ul.className = 'header__links';
+        const minimize = document.createElement('li');
+        minimize.className = 'header__minimize';
+        minimize.textContent = '_';
+        ul.appendChild(minimize);
+        const maximize = document.createElement('li');
+        maximize.className = 'header__maximize';
+        maximize.textContent = '[]';
+        ul.appendChild(maximize);
+        const close = document.createElement('li');
+        close.className = 'header__close';
+        close.innerHTML = '×';
+        ul.appendChild(close);
+        header.appendChild(ul);
+        return header;
+    };
+      
+    const Navbar = ({ chatName }) => {
+        const nav = document.createElement('nav');
+        nav.className = 'nav';
+        const ul = document.createElement('ul');
+        ul.className = 'nav__list';
+        ['File', 'Edit', 'Insert'].forEach(itemText => {
+            const li = document.createElement('li');
+            li.className = 'nav__item';
+            li.textContent = itemText;
+            ul.appendChild(li);
+        });
+        const span = document.createElement('span');
+        span.className = 'nav__warning-level';
+        span.textContent = `${chatName}'s Warning Level: 0%`;
+        nav.appendChild(ul);
+        nav.appendChild(span);
+        return nav;
+    };
+      
+    const playSound = () => {
+        const audio = document.getElementById('slicksoles-audio-player');
+        if (audio) {
+            audio.currentTime = 0;
+            audio.play().catch(error => {
+                console.log('Autoplay was prevented. User must interact with the page first.');
+            });
+        }
+    };
+
+    const MessageItem = ({ message, screenName, className }) => {
+        const { text } = message;
+        const div = document.createElement('div');
+        div.className = `message-item ${className || ''}`;
+        const screenNameDiv = document.createElement('div');
+        screenNameDiv.className = 'message-item__screenname';
+        screenNameDiv.textContent = `${screenName}:`;
+        div.appendChild(screenNameDiv);
+        div.appendChild(document.createTextNode(text));
+        return div;
+    };
+      
+    const MessageList = (props) => {
+        const { messageData } = props;
+        const div = document.createElement('div');
+        div.className = 'message-list';
+        const container = document.createElement('div');
+        container.className = 'message-list__container';
+        messageData.forEach((message) => {
+            const className = message.type === 'other' ? 'message-item--other' : '';
+            container.appendChild(MessageItem({ message, screenName: message.speaker, className }));
+        });
+        div.appendChild(container);
+        return div;
+    };
+      
+    const CustomizeRow = () => {
+        const div = document.createElement('div');
+        div.className = 'customize-row';
+        const createSet = () => document.createElement('div');
+        const set1 = createSet();
+        set1.className = 'customize-row__set';
+        const btn1 = document.createElement('button');
+        btn1.className = 'customize-row__button text-blue';
+        btn1.textContent = 'A';
+        const btn2 = document.createElement('button');
+        btn2.className = 'customize-row__button background-blue';
+        btn2.textContent = 'A';
+        set1.appendChild(btn1);
+        set1.appendChild(btn2);
+        div.appendChild(set1);
+        const set2 = createSet();
+        set2.className = 'customize-row__set';
+        const btn3 = document.createElement('button');
+        btn3.className = 'customize-row__button small-a';
+        btn3.textContent = 'A';
+        const btn4 = document.createElement('button');
+        btn4.className = 'customize-row__button medium-a';
+        btn4.textContent = 'A';
+        const btn5 = document.createElement('button');
+        btn5.className = 'customize-row__button large-a';
+        btn5.textContent = 'A';
+        set2.appendChild(btn3);
+        set2.appendChild(btn4);
+        set2.appendChild(btn5);
+        div.appendChild(set2);
+        const set3 = createSet();
+        set3.className = 'customize-row__set';
+        const btn6 = document.createElement('button');
+        btn6.className = 'customize-row__button bold-text';
+        btn6.textContent = 'B';
+        const btn7 = document.createElement('button');
+        btn7.className = 'customize-row__button italic-text';
+        btn7.textContent = 'I';
+        const btn8 = document.createElement('button');
+        btn8.className = 'customize-row__button underline-text';
+        btn8.textContent = 'u';
+        set3.appendChild(btn6);
+        set3.appendChild(btn7);
+        set3.appendChild(btn8);
+        div.appendChild(set3);
+        const set4 = createSet();
+        set4.className = 'customize-row__set';
+        const btn9 = document.createElement('button');
+        btn9.className = 'customize-row__button link-text';
+        btn9.textContent = 'link';
+        const btn10 = document.createElement('button');
+        btn10.className = 'customize-row__button';
+        const img = document.createElement('img');
+        img.src = 'http://www.jesush.com/wp-content/uploads/2008/07/happy10.gif';
+        btn10.appendChild(img);
+        set4.appendChild(btn9);
+        set4.appendChild(btn10);
+        div.appendChild(set4);
+        return div;
+    };
+      
+    const MessageForm = ({ value, addedMessage, onChange }) => {
+        const form = document.createElement('form');
+        form.className = 'message-form';
+        const textarea = document.createElement('textarea');
+        textarea.className = 'message-form__textarea';
+        textarea.value = value;
+        textarea.addEventListener('input', onChange);
+        const actionsDiv = document.createElement('div');
+        actionsDiv.className = 'message-form__actions';
+        const submitBtn = document.createElement('button');
+        submitBtn.type = 'submit';
+        submitBtn.className = 'message-form__submit';
+        submitBtn.disabled = !value.length;
+        if (!value.length) {
+            submitBtn.classList.add('message-form__submit--disabled');
+        }
+        actionsDiv.appendChild(submitBtn);
+        form.appendChild(textarea);
+        form.appendChild(actionsDiv);
+        form.addEventListener('submit', (e) => addedMessage(e, value));
+        return form;
+    };
+        
+    let messageId = 0;
+    const programmedMessages = [
+        { text: "Hey! wyd?", speaker: "slicksol3s" },
+        { text: "the usual nothing. idk what to do tonite Tuesdays in Providence are SO BORING", speaker: "gottarun" },
+        { text: "dawg", speaker: "slicksol3s" },
+        { text: "What are you talking about it's J.E.T. night", speaker: "slicksol3s" },
+        { text: "6:30 @ Prospect Park. We all meet up and try to set the new fastest time up Jenckes", speaker: "slicksol3s" },
+        { text: "yo that sounds cool as hell", speaker: "gottarun" },
+        {text: "ya...it is...be there or be a square [ ]", speaker: "slicksol3s" },
+        { text: "Okay I'll get my reeboks pumped", speaker: "gottarun" },
+        { text: "seeya there", speaker: "gottarun" },
+    ];
+      
+    class InstantMessenger {
+        constructor(container) {
+            this.container = container;
+            this.state = {
+                chatName: "slicksol3s",
+                screenName: "gottarun",
+                data: [],
+                value: "",
+                programmedMessages: programmedMessages,
+                messageIndex: 0,
+                timerId: null
+            };
+            this.isDragging = false;
+            this.offsetX = 0;
+            this.offsetY = 0;
+            this.chatWindow = null;
+            this.titleBar = null;
+
+            this.render();
+            this.startRollout();
+        }
+        
+        startRollout = () => {
+            const interval = Math.random() * (5000 - 3000) + 1000;
+            const timerId = setInterval(this.addProgrammedMessage, interval);
+            this.setState({ timerId });
+        };
+        
+        addProgrammedMessage = () => {
+            const { programmedMessages, messageIndex, chatName, screenName } = this.state;
+            if (messageIndex < programmedMessages.length) {
+                const message = programmedMessages[messageIndex];
+                let messageType;
+                if (message.speaker === chatName) {
+                    messageType = 'other';
+                    playSound();
+                } else if (message.speaker === screenName) {
+                    messageType = 'self';
+                }
+                const newMessage = {
+                    text: message.text,
+                    id: messageId++,
+                    type: messageType,
+                    speaker: message.speaker
+                };
+                this.setState({
+                    data: [...this.state.data, newMessage],
+                    messageIndex: messageIndex + 1
+                });
+                clearInterval(this.state.timerId);
+                this.startRollout();
+            } else {
+                clearInterval(this.state.timerId);
+            }
+        };
+      
+        setState(newState) {
+            this.state = { ...this.state, ...newState };
+            this.render();
+        }
+      
+        addedMessage = (e, val) => {
+            e.preventDefault();
+            if (!val) return;
+            const message = { text: val, id: messageId++, speaker: this.state.screenName };
+            this.setState({ data: [...this.state.data, message], value: "" });
+        };
+      
+        handleChange = (event) => {
+            this.setState({ value: event.target.value });
+        };
+      
+        render() {
+            if (!this.chatWindow) {
+                this.chatWindow = document.createElement('div');
+                this.chatWindow.className = 'window';
+                this.chatWindow.style.width = '';
+                this.chatWindow.style.height = '0px';
+                this.chatWindow.style.position = 'absolute';
+                this.chatWindow.style.left = '600px';
+                this.chatWindow.style.top = '0px';
+                this.container.appendChild(this.chatWindow);
+
+                this.titleBar = document.createElement('div');
+                this.titleBar.className = 'title-';
+                const titleText = document.createElement('div');
+                titleText.className = 'title-bar-text';
+                titleText.textContent = `${this.state.chatName} - Instant Message`;
+                const titleControls = document.createElement('div');
+                titleControls.className = 'title-bar-controls';
+                const minimizeBtn = document.createElement('button');
+                minimizeBtn.setAttribute('aria-label', 'Minimize');
+                const maximizeBtn = document.createElement('button');
+                maximizeBtn.setAttribute('aria-label', 'Maximize');
+                maximizeBtn.disabled = true;
+                const closeBtn = document.createElement('button');
+                closeBtn.setAttribute('aria-label', 'close');
+                closeBtn.innerHTML = 'X';
+                titleControls.appendChild(minimizeBtn);
+                titleControls.appendChild(maximizeBtn);
+                titleControls.appendChild(closeBtn);
+                this.titleBar.appendChild(titleText);
+                this.titleBar.appendChild(titleControls);
+                
+                this.chatWindow.appendChild(this.titleBar);
+
+                const windowBody = document.createElement('div');
+                windowBody.className = 'window-body';
+                this.chatWindow.appendChild(windowBody);
+                this.windowBody = windowBody;
+
+                // Attach event listeners only once during initial creation
+                this.attachDragLogic();
+                this.attachCloseLogic();
+            }
+            
+            this.windowBody.innerHTML = '';
+            const { data, chatName, screenName, value } = this.state;
+            const instantMessengerDiv = document.createElement('div');
+            instantMessengerDiv.className = 'instant-messenger';
+            instantMessengerDiv.appendChild(Title({ chatName }));
+            instantMessengerDiv.appendChild(Navbar({ chatName }));
+            instantMessengerDiv.appendChild(MessageList({ messageData: data, screenName, chatName }));
+            instantMessengerDiv.appendChild(CustomizeRow());
+            instantMessengerDiv.appendChild(MessageForm({
+                addedMessage: this.addedMessage,
+                onChange: this.handleChange,
+                value: value
+            }));
+            this.windowBody.appendChild(instantMessengerDiv);
+        }
+
+        attachDragLogic = () => {
+            this.titleBar.addEventListener('mousedown', (e) => {
+                this.isDragging = true;
+                this.offsetX = e.clientX - this.chatWindow.getBoundingClientRect().left;
+                this.offsetY = e.clientY - this.chatWindow.getBoundingClientRect().top;
+                e.preventDefault();
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!this.isDragging) return;
+                this.chatWindow.style.left = `${e.clientX - this.offsetX}px`;
+                this.chatWindow.style.top = `${e.clientY - this.offsetY}px`;
+            });
+
+            document.addEventListener('mouseup', () => {
+                this.isDragging = false;
+            });
+        };
+
+        attachCloseLogic = () => {
+            const closeBtn = this.titleBar.querySelector('button[aria-label="close"]');
+            closeBtn.addEventListener('click', () => {
+                this.chatWindow.style.display = 'none';
+            });
+        };
+    }
+      
+    // Initializing the IM window
+    document.addEventListener('DOMContentLoaded', () => {
+        const imContainer = document.getElementById('im-window-container');
+        new InstantMessenger(imContainer);
+    });
+    </script>
+</body>
+</html>
